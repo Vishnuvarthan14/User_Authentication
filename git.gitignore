@@ -1,0 +1,38 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.pyc
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# SQLite database
+*.db
+*.sqlite3
+
+# Environment & secrets
+.env
+.env.*
+
+# IDE / editor files
+.vscode/
+.idea/
+*.swp
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Compiled bytecode and distributions
+build/
+dist/
+*.egg-info/

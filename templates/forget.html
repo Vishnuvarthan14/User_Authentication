@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 450px;
+}
+
+.form {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.form:hover {
+    transform: translateY(-5px);
+}
+
+.form1, .form2 {
+    margin-bottom: 25px;
+}
+
+.form2 {
+    border-top: 2px solid #f1f1f1;
+    padding-top: 25px;
+}
+
+.input {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.input input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+.input input:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.input input::placeholder {
+    color: #999;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.data {
+    margin-top: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 450px;
+    width: 100%;
+}
+
+.data h3 {
+    color: red;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* Animation for forms */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form1 {
+    animation: fadeInUp 0.6s ease;
+}
+
+.form2 {
+    animation: fadeInUp 0.6s ease 0.2s both;
+}
+
+.data {
+    animation: fadeInUp 0.6s ease;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .container {
+        max-width: 100%;
+    }
+    
+    .form {
+        padding: 30px 20px;
+    }
+    
+    .input input {
+        padding: 12px;
+        font-size: 14px;
+    }
+    
+    button {
+        padding: 12px;
+        font-size: 14px;
+    }
+    
+    .data {
+        padding: 15px;
+    }
+    
+    .data h3 {
+        font-size: 14px;
+    }
+}
+
+/* Loading state for button */
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+button:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+</style>
+<body>
+    <div class="container">
+        <div class="form">
+                <form class="form1" action="/forget" method="post">
+                    <div class="input">
+                        <input type="mail" name="user_mail" placeholder="Enter Your Mail-Id" required>
+                    </div>
+                    <button>Send OTP</button>
+                </form>
+
+                <form action="/validate" class="form2" method="post">
+                      <div class="input">
+                        <input type="password" name="user_OTP" placeholder="Enter Your OTP" required>
+                    </div>
+                    <button>Verify</button>
+                </form>
+        </div>
+    </div>
+    {% if data %}
+    <div class="data"><h3>{{data}}</h3></div>
+    {% endif %}
+</body>
+</html>

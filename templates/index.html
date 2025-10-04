@@ -1,0 +1,135 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        flex-direction: column;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .form {
+        background: white;
+        padding: 40px 30px;
+        border-radius: 15px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 2rem;
+        font-weight: 600;
+    }
+    h5{
+        text-align: center;
+        color: #333;
+        margin-bottom: 5px;
+        font-weight: 500;
+    }
+
+    .input {
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .input input {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid #e1e1e1;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        background: #f8f9fa;
+    }
+
+    .input input:focus {
+        outline: none;
+        border-color: #667eea;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .input input::placeholder {
+        color: #999;
+    }
+
+    button {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        letter-spacing: 1px;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .data{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: red;
+        font-size:medium ;
+        font-weight: 500;
+        margin-top: 10px;
+        width: 100%;
+    }
+
+
+    </style>
+    <body>
+        <div class="container">
+            <div class="form">
+                <h1>Register</h1>
+                <form action="/" method="post">
+                    <div class="input">
+                        <input type="text" name="user_name" placeholder="Enter Your Name" required>
+                    </div>
+                    <div class="input">
+                        <input type="email" name="user_mail" placeholder="Enter Your Mail ID" required  >
+                    </div>
+                    <div class="input">
+                        <input type="password" name="user_password" placeholder="Password" required>
+                    </div>
+                    <button>Register</button>
+                    <h5>or</h5>
+                </form>
+                <a href="{{url_for('login')}}"><button >Login</button></a>
+
+                    {% if data %}
+                    <div class="data"><h3>{{data}}</h3></div>
+                    {% endif %}
+            </div>
+        </div>
+        
+    </body>
+    </html> 
