@@ -1,6 +1,5 @@
 from flask import Flask,render_template,request,jsonify,redirect,url_for,session
 from flask_sqlalchemy import SQLAlchemy
-from function import authenticate
 from flask_mail import Mail,Message
 from datetime import datetime,timedelta
 from dotenv import load_dotenv
@@ -79,28 +78,41 @@ def get():
         })
     return jsonify(processed)
 
-@app.route('/login',methods=['POST','GET'])
+@app.route('/get/<string:mail>',methods=['GET'])
+def get_user(mail):
+    data = userDetails.query.filter_by(user_mail=mail).first()
+    if not data:
+        return jsonify({'message':' User Not found'})
+    
+    processed = {'id':data.user_id,'name':data.user_name,'mail':data.user_mail,'password':data.user_password}
+    return jsonify(processed)
+
+
+@app.route('/login', methods=['POST', 'GET'])
 def loginPage():
-    if request.method =='POST':
-        email = request.form['user_mail']
-        password = request.form['user_password']
+    if request.method == 'POST':
+        email = request.form.get('user_mail')
+        password = request.form.get('user_password')
 
         if not email:
-            return render_template('login.html',data='Enter your Email')
+            return render_template('login.html', data='Enter your Email')
         if not password:
-            return render_template('login.html')
+            return render_template('login.html', data='Enter your Password')
 
-        check = userDetails.query.filter_by(user_mail=email).first()
-        if not check:
-            return render_template('login.html',data='Invalid email or password')
-        
-        message = authenticate(email,password)
-        if message['message']=='Success':
+        user = userDetails.query.filter_by(user_mail=email).first()
+
+        if not user:
+            return render_template('login.html', data='Invalid email or password')
+
+        if user.user_password == password:
+            session['user_id'] = user.user_id
+            session['user_name'] = user.user_name
             return redirect(url_for('home'))
         else:
-            return render_template('login.html',data=message['message'])
+            return render_template('login.html', data='Invalid email or password')
 
-       
+    return render_template('login.html')
+   
 @app.route('/forget',methods = ['POST','GET'])
 def forget():
     if request.method == 'POST':
