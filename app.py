@@ -3,23 +3,27 @@ from flask_sqlalchemy import SQLAlchemy
 from function import authenticate
 from flask_mail import Mail,Message
 from datetime import datetime,timedelta
+from dotenv import load_dotenv
+import os
 import random
-import secrets
+
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = secrets.token_hex(16)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///databse.db'
+app.secret_key = os.getenv("SECRET_KEY")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URI")
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
 
-#Mail proctocols
-app.config['MAIL_SERVER'] = "smtp.gmail.com"
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = "vishnuvarthanjegan44@gmail.com"
-app.config['MAIL_PASSWORD'] = "oezqxmgkoqefqzoy"
-#Mail protocols
+# Mail configuration
+app.config['MAIL_SERVER'] = os.getenv("MAIL_SERVER")
+app.config['MAIL_PORT'] = int(os.getenv("MAIL_PORT", 587))
+app.config['MAIL_USE_TLS'] = os.getenv("MAIL_USE_TLS") == 'True'
+app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
+app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
 
-mail=Mail(app)
+mail = Mail(app)
 
 
 class userDetails(db.Model):
@@ -35,7 +39,6 @@ class userDetails(db.Model):
 with app.app_context():
     db.create_all()
 
-print("SECRET_KEY =", app.secret_key)
 
 @app.route('/',methods = ['POST','GET'])
 def load():
