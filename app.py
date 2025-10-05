@@ -2,6 +2,7 @@ from flask import Flask,render_template,request,jsonify,redirect,url_for,session
 from flask_sqlalchemy import SQLAlchemy
 from function import authenticate
 from flask_mail import Mail,Message
+from datetime import datetime,timedelta
 import random
 import secrets
 
@@ -120,6 +121,7 @@ def forget():
         otp = str(random.randint(100000,999999))
         session['otp'] = otp
         session['email'] = email
+        session['otp_time'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         msg = Message('Your OTP Verification Code',
                       sender=app.config['MAIL_USERNAME'],recipients=[email])
@@ -132,6 +134,13 @@ def forget():
 def validate():
     if request.method == 'POST':
         otp = request.form.get('user_OTP')
+
+        otp_time = datetime.strptime(session.get('otp_time'),"%Y-%m-%d %H:%M:%S")
+        if datetime.now()-otp_time> timedelta(minutes=1):
+            session.pop('otp',None)
+            session.pop('otp_time',None)
+            return render_template('forget.html',data="Your OTP EXPIRED")
+
         if otp == session.get('otp'):
             session.pop('otp', None)
             return redirect(url_for('change'))
