@@ -17,7 +17,7 @@ db = SQLAlchemy(app)
 
 # Mail configuration
 app.config['MAIL_SERVER'] = os.getenv("MAIL_SERVER")
-app.config['MAIL_PORT'] = int(os.getenv("MAIL_PORT", 465))
+app.config['MAIL_PORT'] = int(os.getenv("MAIL_PORT", 587))
 app.config['MAIL_USE_TLS'] = os.getenv("MAIL_USE_TLS") == 'True'
 app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
 app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
@@ -141,7 +141,7 @@ def validate():
         otp = request.form.get('user_OTP')
 
         otp_time = datetime.strptime(session.get('otp_time'),"%Y-%m-%d %H:%M:%S")
-        if datetime.now()-otp_time> timedelta(minutes=1):
+        if datetime.now()-otp_time> timedelta(minutes=5):
             session.pop('otp',None)
             session.pop('otp_time',None)
             return render_template('forget.html',data="Your OTP EXPIRED")
@@ -173,4 +173,4 @@ def change():
 
 
 if __name__== '__main__':
-    app.run(host="0.0.0.0", port=5000)
+    app.run(debug=True)
