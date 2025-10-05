@@ -152,7 +152,7 @@ def change():
         
         user.user_password = new_pass
         db.session.commit()
-        session.pop('email', None)  # clear email after update
+        session.pop('email', None)
         return redirect(url_for('login'))
 
     return render_template('change_password.html')
