@@ -129,7 +129,11 @@ def forget():
         msg = Message('Your OTP Verification Code',
                       sender=app.config['MAIL_USERNAME'],recipients=[email])
         msg.body = f"Your Verification Code is {otp}"
-        mail.send(msg)
+        try:
+            mail.send(msg)
+        except Exception as e:
+            return render_template('forget.html',data='Unable to send Mail')
+
         return redirect(url_for('validate'))
     return render_template('forget.html')
 
