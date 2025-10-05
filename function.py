@@ -1,7 +1,7 @@
 import requests
 import urllib.parse
 from flask import jsonify
-base='http://127.0.0.1:5000'
+base='https://user-authentication-1-r52w.onrender.com'
 
 def getDetails(email):
     refined_mail = urllib.parse.quote(email)
