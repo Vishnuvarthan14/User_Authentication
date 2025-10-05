@@ -36,10 +36,6 @@ class userDetails(db.Model):
         return f"user_id= {self.user_id} user_name ={self.name} user_mail={self.user_mail} user_password={self.user_password}"
     
 
-with app.app_context():
-    db.create_all()
-
-
 @app.route('/',methods = ['POST','GET'])
 def load():
     if request.method == 'POST':
