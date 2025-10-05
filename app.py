@@ -79,16 +79,6 @@ def get():
         })
     return jsonify(processed)
 
-@app.route('/get/<string:mail>',methods=['GET'])
-def get_user(mail):
-    data = userDetails.query.filter_by(user_mail=mail).first()
-    if not data:
-        return jsonify({'message':' User Not found'})
-    
-    processed = {'id':data.user_id,'name':data.user_name,'mail':data.user_mail,'password':data.user_password}
-    return jsonify(processed)
-
-
 @app.route('/login',methods=['POST','GET'])
 def loginPage():
     if request.method =='POST':
